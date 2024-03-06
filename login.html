@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>ورود</title>
+
+    <link rel="stylesheet" href="src/bootstrap/css/bootstrap.rtl.css"/>
+    <link rel="stylesheet" href="src/css/style.css"/>
+</head>
+<body>
+<!--TODO: set the error modal here-->
+<div class="contact-form">
+    <h2>ورود</h2>
+    <form action="">
+        <p>نام کاربری</p><input id="username-input" placeholder="نام کاربری خود را وارد کنید" type="text">
+        <p>رمز عبور</p><input id="password-input" placeholder="رمز عبور خود را وارد کنید" type="password">
+        <input type="submit" value="ورود">
+    </form>
+    <div class="d-flex justify-content-between flex-row" id="SignupForgotPassword">
+<!--TODO: Signup redirection-->
+        <a href="/signup.html">اکانت ندارم (ثبت نام)</a>
+<!--TODO: No ForgotPassword logic yet-->
+        <a href="#">فراموشی رمز عبور</a>
+    </div>
+</div>
+
+<script src="src/js/login.js"></script>
+</body>
+</html>
