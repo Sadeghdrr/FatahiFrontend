@@ -25,7 +25,7 @@ body {
 
 body :focus {
     transform: scale(1.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in;
 }
 
 body:before {
@@ -44,7 +44,7 @@ body:before {
     filter: blur(10px);
 }
 
-.contact-form {
+.login-form {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -57,30 +57,30 @@ body:before {
     box-shadow: 5px 9px 11px 5px rgba(0, 0, 0, 0.35);
 }
 
-.contact-form form {
+.login-form form {
     display: flex;
     flex-direction: column;
 }
 
-.contact-form h2 {
+.login-form h2 {
     margin: 0;
     padding: 0 0 20px;
     color: #fff;
     text-align: center;
 }
 
-.contact-form p {
+.login-form p {
     margin: 0;
     padding: 0;
     font-weight: bold;
     color: #fff;
 }
 
-.contact-form input {
+.login-form input {
     margin-bottom: 20px;
 }
 
-.contact-form input[type=text], .contact-form input[type=password] {
+.login-form input[type=text], .login-form input[type=password] {
     width: 100%;
     border: none;
     border-bottom: 1px solid #fff;
@@ -92,7 +92,7 @@ body:before {
     direction: rtl;
 }
 
-.contact-form input[type=submit] {
+.login-form input[type=submit] {
     height: 30px;
     width: 40%;
     color: #fff;
@@ -109,4 +109,17 @@ body:before {
 #SignupForgotPassword {
     margin-top: 10px;
     font-size: 13px;
+}
+
+*:-webkit-autofill,
+*:-webkit-autofill:hover,
+*:-webkit-autofill:focus,
+*:-webkit-autofill:active {
+    /* use animation hack, if you have hard styled input */
+    transition: all 5000s ease-in-out 0s;
+    transition-property: background-color, color;
+    /* if input has one color, and didn't have bg-image use shadow */
+    -webkit-box-shadow: 0 0 0 1000px transparent inset;
+    /* text color */
+    -webkit-text-fill-color: #e4ffba;
 }
