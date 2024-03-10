@@ -1,4 +1,4 @@
-import { SERVER_URL, NotificationModal } from "./utils.js";
+import {SERVER_URL, NotificationModal, CheckHasAuthToken} from "./utils.js";
 import $ from './jquery.module.js';
 import './axios.min.js';
 
@@ -6,19 +6,7 @@ const axiosAgent = axios.create({
     baseURL: SERVER_URL,
 });
 
-if (localStorage.getItem("token")) {
-    let data = {
-        token: localStorage.getItem("token")
-    };
-
-    axiosAgent.post("/login/", data)
-        .then((response) => {
-            window.location.href = './panel.html';
-        }, (error) => {
-            console.log(error)
-            localStorage.removeItem("token")
-        })
-}
+CheckHasAuthToken(axiosAgent);
 
 function addEventListeners() {
     let username = $("#username-input")
