@@ -3,8 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>ثبت نام</title>
+
+    <link rel="stylesheet" href="./src/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="src/bootstrap/css/bootstrap.rtl.css"/>
+    <link rel="stylesheet" href="src/css/style.css"/>
+    <link rel="stylesheet" href="src/css/login.css"/>
 </head>
 <body>
+<button id="corner-button">بازگشت</button>
 
+<div class="login-form signup-form container-sm">
+    <h2>ثبت نام</h2>
+    <form action="">
+        <div class="row d-flex flex-row justify-content-evenly">
+            <div class="col-5"> <p>نام</p><input id="first-name-input" placeholder="نام خود را وارد کنید" type="text"> </div>
+            <div class="col-5"> <p>نام خانوادگی</p><input id="last-name-input" placeholder="نام خانوادگی خود را وارد کنید" type="text"></div>
+        </div>
+        <div class="row d-flex flex-row justify-content-evenly">
+            <div class="col-5"> <p>کد ملی</p><input id="national-id-input" placeholder="کد ملی خود را وارد کنید" type="text"> </div>
+            <div class="col-5"> <p>ایمیل</p><input id="email-input" placeholder="ایمیل خود را وارد کنید" type="email"> </div>
+        </div>
+        <div class="row d-flex flex-row justify-content-evenly">
+            <div class="col-5"> <p>شماره موبایل</p><input id="mobile-phone-number-input" placeholder="شماره موبایل خود را وارد کنید" type="text"> </div>
+            <div class="col-5"> <p>تلفن ثابت (اختیاری)</p><input id="landline-phone-number-input" placeholder="تلفن ثابت خود را وارد کنید" type="text"> </div>
+        </div>
+        <div class="row d-flex flex-row justify-content-evenly">
+            <div class="col-5"> <p>آخرین مدرک تحصیلی (اختیاری)</p><input id="educational-level-input" placeholder="آخرین مدرک تحصیلی خود را وارد کنید" type="text"> </div>
+            <div class="col-5"> <p>رشته تحصیلی (اختیاری)</p><input id="major-input" placeholder="رشته تحصیلی خود را وارد کنید" type="text"> </div>
+        </div>
+        <div class="row d-flex flex-row justify-content-evenly">
+            <div class="col-5"> <p>شماره حساب بانکی</p><input id="bank-account-number-input" placeholder="شماره حساب بانکی خود را وارد کنید" type="text"> </div>
+            <div class="col-5"> <p>کد پستی (اختیاری)</p><input id="postal-code-input" placeholder="کد پستی خود را وارد کنید" type="text"> </div>
+        </div>
+        <div class="row d-flex flex-row justify-content-around">
+            <div class="col-11"> <p>آدرس</p><input id="address-input" placeholder="آدرس خود را وارد کنید" type="text"> </div>
+        </div>
+        <input id="signup-button" type="submit" value="ثبت نام">
+    </form>
+</div>
+
+<script src="src/js/sweetalert2.all.min.js"></script>
+<script type="module" src="src/js/signup.js"></script>
 </body>
 </html>
