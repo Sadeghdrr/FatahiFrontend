@@ -112,20 +112,13 @@ body:before {
     transform: scale(1.05);
 }
 
-.login-form h2 {
+.signup-form h2 {
     margin-bottom: 50px;
 }
 
 #corner-button {
     position: absolute;
-    top: 2%; /* Adjust the top margin as needed */
-    left: 1%; /* Adjust the right margin as needed */
-    padding: 10px 20px; /* Adjust padding as needed */
-    background-color: #4CAF50; /* Change background color */
-    color: white; /* Change text color */
-    border: none;
-    border-radius: 5px; /* Add rounded corners */
-    cursor: pointer;
-    font-size: 16px;
+    top: 2%;
+    left: 1%;
     z-index: 1;
 }
