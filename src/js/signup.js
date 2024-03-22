@@ -36,7 +36,7 @@ function getErrorInPersian(error_describtion) {
         "profile with this national ID already exists.": "با این کدملی یک پروفایل دیگر ساخته شده است",
         "profile with this bank account number already exists.": "با این شماره حساب بانکی یک پروفایل دیگر ساخته شده است",
         "Ensure this field has at least 11 characters.": "این فیلد باید حتما 11 کاراکتر داشته باشد",
-        "Ensure this field has at least 10 characters.": "این فیلد باید حتما 11 کاراکتر داشته باشد",
+        "Ensure this field has at least 10 characters.": "این فیلد باید حتما 10 کاراکتر داشته باشد",
     };
 
     return errorTranslations[error_describtion] || error_describtion;

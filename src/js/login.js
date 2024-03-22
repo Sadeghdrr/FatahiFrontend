@@ -25,7 +25,7 @@ function addEventListeners() {
                 localStorage.setItem('token', response.data.token)
                 NotificationModal("success", "ورود با موفقیت انجام شد", "لطفا کمی منتظر بمانید...")
                 setTimeout(() => {
-                    window.location.href = './panel.html';
+                    window.location.href = '../../index2.html';
                 }, 1000);
             }, (error) => {
                 try {

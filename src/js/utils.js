@@ -16,10 +16,11 @@ export function CheckHasAuthToken(axiosAgent) {
 
         axiosAgent.post("/login/", data)
             .then((response) => {
-                window.location.href = './panel.html';
+                window.location.href = '../../index2.html';
             }, (error) => {
                 console.log(error)
                 localStorage.removeItem("token")
+                window.location.href = './login.html';
             })
     }
 }
