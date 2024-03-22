@@ -28,3 +28,16 @@ body {
     /* text color */
     -webkit-text-fill-color: #e4ffba;
 }
+
+#date-box {
+    padding: 8px 20px;
+    color: rebeccapurple;
+}
+
+#date-time {
+    font-size: 14px;
+}
+
+#logout-button {
+    margin: 0px 10px;
+}

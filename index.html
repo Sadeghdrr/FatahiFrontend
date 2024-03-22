@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>پنل مدیریت | داشبورد اول</title>
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -31,6 +32,8 @@
   <!-- template rtl version -->
   <link rel="stylesheet" href="dist/css/custom-style.css">
 
+  <link rel="stylesheet" href="src/css/sweetalert2.min.css">
+  <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -46,13 +49,13 @@
 
     <!-- Left navbar links -->
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" id="date-box" style="padding: 8px 20px;">
+      <li class="nav-item" id="date-box"  >
         <b>تاریخ امروز:</b>
-        <div class="d-inline" id="date">1402/07/17</div>
+        <div class="d-inline" id="date-time">1402/07/17</div>
       </li>
       <li class="nav-item nav-link" id="logout-button">
           خروج
-          <i class="fa fa-sign-out" aria-hidden="true" style="margin-left: 10px"></i>
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
       </li>
     </ul>
   </nav>
@@ -975,15 +978,11 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
   <footer class="main-footer">
-    <strong>CopyLeft &copy; 2018 <a href="http://github.com/hesammousavi/">حسام موسوی</a>.</strong>
+    <!--  Footer goes here  -->
   </footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
@@ -1020,9 +1019,12 @@
 <script src="plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.js"></script>
+
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <!--<script src="dist/js/demo.js"></script>-->
+
+
 </body>
 </html>
