@@ -51,7 +51,6 @@ export function GetCurrentUser() {
         });
 }
 
-
 export function CreateSideBar(user, page_link, sidebar, profile) {
     let html_body = "";
     switch (user.access_level) {
@@ -90,7 +89,7 @@ export function CreateSideBar(user, page_link, sidebar, profile) {
     }
 
     sidebar.html(html_body)
-    profile.text(user.profile.first_name + ' ' + user.profile.last_name)
+    profile.text(user.name.split('-')[1] + ' ' + user.name.split('-')[0])
 }
 
 function CreateSidebarItem(item_link, item_name, item_icon, item_active) {
