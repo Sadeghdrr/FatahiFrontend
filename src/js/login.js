@@ -6,8 +6,6 @@ const axiosAgent = axios.create({
     baseURL: SERVER_URL,
 });
 
-CheckHasAuthToken(axiosAgent);
-
 function addEventListeners() {
     let username = $("#username-input")
     let password = $("#password-input")
@@ -25,7 +23,7 @@ function addEventListeners() {
                 localStorage.setItem('token', response.data.token)
                 NotificationModal("success", "ورود با موفقیت انجام شد", "لطفا کمی منتظر بمانید...")
                 setTimeout(() => {
-                    window.location.href = '../../index2.html';
+                    window.location.href = 'contracts.html';
                 }, 1000);
             }, (error) => {
                 try {
@@ -41,4 +39,13 @@ function addEventListeners() {
     });
 }
 
-addEventListeners()
+CheckHasAuthToken(axiosAgent)
+    .then((hasAuth) => {
+        if (hasAuth)
+            window.location.href = "contracts.html"
+        else
+            addEventListeners();
+    })
+    .catch((error) => {
+        console.error("Error checking authentication:", error);
+    });

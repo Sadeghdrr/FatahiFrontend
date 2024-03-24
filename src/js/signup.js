@@ -86,17 +86,10 @@ function addEventListeners() {
             .then((response) => {
                 NotificationModal("success", "ثبت نام با موفقیت انجام شد", "نام کاربری و رمز عبور برای شما پیامک خواهد شد")
             }, (error) => {
-                // TODO: delete debuging logs
-                console.log(error)
                 try {
                     if (error.response.status == 400) {
                         let errors = error.response.data;
                         let errors_fields = Object.keys(errors);
-                        // TODO: delete debuging logs
-                        console.log(errors)
-                        console.log(errors_fields)
-                        console.log(errors_fields.length)
-                        console.log(data)
                         NotifErrors(errors, errors_fields);
                     } else {
                         NotificationModal("error", "ثبت نام ناموفق", `status:${error.response.status}`)
@@ -113,4 +106,13 @@ function addEventListeners() {
     });
 }
 
-addEventListeners();
+CheckHasAuthToken(axiosAgent)
+    .then((hasAuth) => {
+        if (hasAuth)
+            window.location.href = "contracts.html"
+        else
+            addEventListeners();
+    })
+    .catch((error) => {
+        console.error("Error checking authentication:", error);
+    });

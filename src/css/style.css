@@ -39,5 +39,25 @@ body {
 }
 
 #logout-button {
-    margin: 0px 10px;
+    margin: 0 10px;
+}
+
+#logout-button i {
+    padding-right: 2px;
+}
+
+#logout-button:hover {
+    cursor: pointer;
+}
+
+#brand-logo {
+    background-image: linear-gradient(to right, #001a44, #000023);
+}
+
+#sidebar {
+    background-image: linear-gradient(to right, #003172, #00002f);
+}
+
+#navbar {
+    background-color: #00ffff;
 }
