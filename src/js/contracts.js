@@ -1,23 +1,22 @@
-import {CheckHasAuthToken, CreateSideBar, GetCurrentUser, SERVER_URL} from "./utils.js";
+import {axiosAgent, CheckHasAuthToken, CreateSideBar, GetCurrentUser, InitiateNavbar, SERVER_URL} from "./utils.js";
 import $ from './jquery.module.js';
 import './axios.min.js';
 
-const axiosAgent = axios.create({
-    baseURL: SERVER_URL,
-});
-
-CheckHasAuthToken(axiosAgent)
+CheckHasAuthToken()
     .then((hasAuth) => {
         if (hasAuth) {
-            axiosAgent.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;
-            GetCurrentUser(axiosAgent).then((user) => {
-                console.log(user)
-                $("#sidebar-menu").html(CreateSideBar(user.access_level, "contracts.html"));
-            })
-        }
-        else
+            GetCurrentUser()
+                .then((user) => {
+                    let sidebar_menu = $("#sidebar-menu")
+                    let profile_link = $("#profile-link")
+                    CreateSideBar(user, "contracts.html", sidebar_menu, profile_link)
+                })
+        } else
             window.location.href = "login.html"
     })
     .catch((error) => {
         console.error("Error checking authentication:", error);
     });
+
+InitiateNavbar($("#navbar"))
+
