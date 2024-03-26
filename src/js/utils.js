@@ -41,8 +41,6 @@ export function CheckHasAuthToken() {
 export function GetCurrentUser() {
     return axiosAgent.get("retrieve/current_user/")
         .then((response) => {
-            // TODO: debugging log
-            console.log(response)
             return response.data; // Return the user's information
         })
         .catch((error) => {
@@ -51,7 +49,42 @@ export function GetCurrentUser() {
         });
 }
 
-export function CreateSideBar(user, page_link, sidebar, profile) {
+export function getFieldNameInPersian(field_name) {
+    const fieldTranslations = {
+        first_name: "نام",
+        last_name: "نام خانوادگی",
+        email: "ایمیل",
+        national_ID: "کد ملی",
+        mobile_phone_number: "شماره موبایل",
+        address: "آدرس",
+        bank_account_number: "شماره حساب بانکی",
+        error: "پروفایل تکراری",
+        landline_phone_number: "تلفن ثابت",
+        postal_code: "کد پستی",
+        major: "رشته تحصیلی",
+        educational_level: "آخرین مدرک تحصیلی",
+    };
+
+    return fieldTranslations[field_name] || field_name;
+}
+
+export function getErrorInPersian(error_describtion) {
+    const errorTranslations = {
+        "This field is required.": "این فیلد الزامی است",
+        "This field may not be blank.": "این فیلد الزامی است",
+        "profile with this email already exists.": "با این ایمیل یک پروفایل دیگر ساخته شده است",
+        "profile with this mobile phone number already exists.": "با این شماره همراه یک پروفایل دیگر ساخته شده است",
+        "profile with this national ID already exists.": "با این کدملی یک پروفایل دیگر ساخته شده است",
+        "profile with this bank account number already exists.": "با این شماره حساب بانکی یک پروفایل دیگر ساخته شده است",
+        "Ensure this field has at least 11 characters.": "این فیلد باید حتما 11 کاراکتر داشته باشد",
+        "Ensure this field has at least 10 characters.": "این فیلد باید حتما 10 کاراکتر داشته باشد",
+        "Enter a valid email address.": "فرمت ایمیل اشتباه است.",
+    };
+
+    return errorTranslations[error_describtion] || error_describtion;
+}
+
+function CreateSideBar(user, page_link, sidebar, profile) {
     let html_body = "";
     switch (user.access_level) {
         case 'کاربر':
@@ -94,29 +127,26 @@ export function CreateSideBar(user, page_link, sidebar, profile) {
 
 function CreateSidebarItem(item_link, item_name, item_icon, item_active) {
     return `<li class="nav-item">
-   <a href="${item_link}" class="nav-link ${item_active ? "active" : ""}">
+   <a href="./${item_link}" class="nav-link ${item_active ? "active" : ""}">
         <i class="fa ${item_icon} nav-icon"></i>
         <p>${item_name}</p>
     </a>
 </li>\n`
 }
 
-export function InitiateNavbar(navbar) {
+function InitiateNavbar(navbar) {
     let date_time = navbar.find('#date-box').find('#date-time')
     let logout_btn = navbar.find('#logout-button')
 
     logout_btn.on("click", function (event) {
         axiosAgent.post('/logout/')
             .then((response) => {
-                // TODO: debugging log
-                console.log(response)
                 localStorage.removeItem('token')
                 NotificationModal("success", "خروج با موفقیت انجام شد", "لطفا کمی منتظر بمانید...")
                 setTimeout(() => {
                     window.location.href = 'login.html';
                 }, 1000);
             }, (error) => {
-                // TODO: debugging log
                 console.error(error)
                 NotificationModal("error", "ورود ناموفق", error.response.status)
             })
@@ -125,4 +155,24 @@ export function InitiateNavbar(navbar) {
     const currentDate = new persianDate();
     const formattedDate = currentDate.format('YYYY/MM/DD');
     date_time.text(formattedDate);
+}
+
+export function CreateNavSide(page_link) {
+    CheckHasAuthToken()
+        .then((hasAuth) => {
+            if (hasAuth) {
+                GetCurrentUser()
+                    .then((user) => {
+                        let sidebar_menu = $("#sidebar-menu")
+                        let profile_link = $("#profile-link")
+                        let navbar = $("#navbar")
+                        CreateSideBar(user, page_link, sidebar_menu, profile_link)
+                        InitiateNavbar(navbar)
+                    })
+            } else
+                window.location.href = "login.html"
+        })
+        .catch((error) => {
+            console.error("Error checking authentication:", error);
+        });
 }

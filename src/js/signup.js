@@ -1,40 +1,13 @@
-import {axiosAgent, CheckHasAuthToken, NotificationModal, SERVER_URL} from "./utils.js";
+import {
+    axiosAgent,
+    CheckHasAuthToken,
+    getErrorInPersian,
+    getFieldNameInPersian,
+    NotificationModal,
+    SERVER_URL
+} from "./utils.js";
 import $ from './jquery.module.js';
 import './axios.min.js';
-
-function getFieldNameInPersian(field_name) {
-    const fieldTranslations = {
-        first_name: "نام",
-        last_name: "نام خانوادگی",
-        email: "ایمیل",
-        national_ID: "کد ملی",
-        mobile_phone_number: "شماره موبایل",
-        address: "آدرس",
-        bank_account_number: "شماره حساب بانکی",
-        error: "پروفایل تکراری",
-        landline_phone_number: "تلفن ثابت",
-        postal_code: "کد پستی",
-        major: "رشته تحصیلی",
-        educational_level: "آخرین مدرک تحصیلی",
-    };
-
-    return fieldTranslations[field_name] || field_name;
-}
-
-function getErrorInPersian(error_describtion) {
-    const errorTranslations = {
-        "This field is required.": "این فیلد الزامی است",
-        "This field may not be blank.": "این فیلد الزامی است",
-        "profile with this email already exists.": "با این ایمیل یک پروفایل دیگر ساخته شده است",
-        "profile with this mobile phone number already exists.": "با این شماره همراه یک پروفایل دیگر ساخته شده است",
-        "profile with this national ID already exists.": "با این کدملی یک پروفایل دیگر ساخته شده است",
-        "profile with this bank account number already exists.": "با این شماره حساب بانکی یک پروفایل دیگر ساخته شده است",
-        "Ensure this field has at least 11 characters.": "این فیلد باید حتما 11 کاراکتر داشته باشد",
-        "Ensure this field has at least 10 characters.": "این فیلد باید حتما 10 کاراکتر داشته باشد",
-    };
-
-    return errorTranslations[error_describtion] || error_describtion;
-}
 
 async function NotifErrors(errors, errors_fields) {
     for (let i = 0; i < errors_fields.length; i++) {
