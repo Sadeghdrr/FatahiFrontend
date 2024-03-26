@@ -58,6 +58,66 @@ function addEventListener() {
         });
     }
 
+    async function change_password() {
+        const password_changer_modal = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success m-3 p-2",
+                cancelButton: "btn btn-danger m-3 p-2"
+            },
+            buttonsStyling: false
+        });
+
+        await password_changer_modal.fire({
+            title: "تغییر رمز عبور",
+            html: `
+            <label for="current-password">رمز عبور فعلی</label>
+            <input type="password" id="current-password" class="swal2-input mt-0 mb-4 ltr">
+            <label for="new-password">رمز عبور جدید</label>
+            <input type="password" id="new-password" class="swal2-input mt-0 mb-4 ltr">
+            <label for="new-password-again">تکرار رمز عبور جدید</label>
+            <input type="password" id="new-password-again" class="swal2-input mt-0 mb-4 ltr">
+            <div id="no-match-error" class="text-center d-block" style="color: red"></div>`,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: "تغییر رمز",
+            cancelButtonText: "انصراف",
+            inputAttributes: {
+                autocapitalize: "off"
+            },
+            preConfirm: () => {
+                const currentPassword = $("#current-password").val();
+                const newPassword = $("#new-password").val();
+                const newPasswordAgain = $("#new-password-again").val();
+
+                if (newPassword !== newPasswordAgain) {
+                    $("#no-match-error").text("رمز عبور جدید و تکرار آن مطابقت ندارند")
+                    return false; // Prevent the modal from closing
+                }
+
+                return [currentPassword, newPassword];
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const [currentPassword, newPassword] = result.value;
+
+                axiosAgent.put("/profile/change_password/", {
+                    "current_password": currentPassword,
+                    "new_password": newPassword
+                }).then((response) => {
+                    NotificationModal("success", "ویرایش موفق", "رمز عبور با موفقیت تغییر یافت")
+                }).catch((error) => {
+                    if (error.response && error.response.status === 400) {
+                        let errors = error.response.data;
+                        let errors_fields = Object.keys(errors);
+                        NotifErrors(errors, errors_fields);
+                    } else {
+                        NotificationModal("error", "ویرایش ناموفق", `status:${error.response ? error.response.status : 'unknown'}`);
+                    }
+                });
+            }
+        });
+    }
+
     profile_edit_btn.click(
         function (event) {
             event.preventDefault(); // Prevent the default form submission behavior
@@ -111,6 +171,51 @@ function addEventListener() {
                     }
                 });
 
+        }
+    )
+
+    password_btn.click(function (event) {
+       change_password()
+    })
+
+    username_btn.click(
+        function (event) {
+            Swal.fire({
+                title: "نام کاربری جدید:",
+                html: `
+                <input type="text" id="new-username" class="swal2-input mt-0 mb-4 ltr">
+                <div class="d-block text-center" id="username-length-error" style="color: red"></div>
+                `,
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
+                showDenyButton: true,
+                confirmButtonText: "تایید",
+                denyButtonText: "انصراف",
+                preConfirm: function () {
+                    let username = $("#new-username").val()
+                    if (username.length <= 5) {
+                        $("#username-length-error").text("طول نام کاربری باید بیشتر از 5 کاراکتر باشد")
+                        return false
+                    }
+                    return username;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axiosAgent.put("/profile/change_username/", {"new_username": result.value})
+                        .then((response) => {
+                            NotificationModal("success", "ویرایش موفق", `نام کاربری با موفقیت به "${result.value}" تغییر یافت`)
+                        }).catch((error) => {
+                            if (error.response && error.response.status === 400) {
+                                let errors = error.response.data;
+                                let errors_fields = Object.keys(errors);
+                                NotifErrors(errors, errors_fields);
+                            } else {
+                                NotificationModal("error", "ویرایش ناموفق", `status:${error.response ? error.response.status : 'unknown'}`);
+                            }
+                        });
+                }
+            })
         }
     )
 }

@@ -78,6 +78,8 @@ function getFieldNameInPersian(field_name) {
         postal_code: "کد پستی",
         major: "رشته تحصیلی",
         educational_level: "آخرین مدرک تحصیلی",
+        new_password: "رمز عبور جدید",
+        current_password: "رمز عبور فعلی",
     };
 
     return fieldTranslations[field_name] || field_name;
@@ -94,12 +96,15 @@ function getErrorInPersian(error_describtion) {
         "Ensure this field has at least 11 characters.": "این فیلد باید حتما 11 کاراکتر داشته باشد",
         "Ensure this field has at least 10 characters.": "این فیلد باید حتما 10 کاراکتر داشته باشد",
         "Enter a valid email address.": "فرمت ایمیل اشتباه است.",
+        "This password is too short. It must contain at least 8 characters.": "رمز عبور باید حداقل 8 کاراکتر داشته باشد",
     };
 
     return errorTranslations[error_describtion] || error_describtion;
 }
 
 export async function NotifErrors(errors, errors_fields) {
+    console.log(errors)
+    console.log(errors_fields)
     for (let i = 0; i < errors_fields.length; i++) {
         for (let error_decribtion of errors[errors_fields[i]])
             await NotificationModal("error", getFieldNameInPersian(errors_fields[i]),
