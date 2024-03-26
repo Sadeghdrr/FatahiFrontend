@@ -128,7 +128,7 @@
               </div>
               <!-- /.card-header -->
               <form role="form">
-                <div class="card-body">
+                <div class="card-body" id="profile-card-body">
                   <div class="row">
                     <div class="col-6">
                       <div class="form-group">
@@ -222,13 +222,14 @@
                 </div>
                 <div class="card-footer">
                   <button type="submit" id="profile-edit-btn" class="btn btn-success float-left mr-3">ویرایش</button>
-                  <button type="submit" id="profile-save-btn" class="btn badge-info float-left" disabled>ذخیره تغییرات</button>
+                  <button type="submit" id="profile-save-btn" class="btn btn-info float-left" disabled>ذخیره تغییرات</button>
                 </div>
               </form>
               <!-- /.card-body -->
             </div>
             <!-- /.Profile -->
           </section>
+
           <section class="col-lg-5">
             <!-- Insurance Details -->
             <div class="card card-primary">
@@ -260,6 +261,7 @@
               <!-- /.card-body -->
             </div>
             <!-- /.Insurance Details -->
+
             <!-- Username / Password Change -->
             <div class="card card-success">
               <div class="card-header d-flex p-0">
@@ -269,14 +271,10 @@
                 </h3>
               </div>
               <!-- /.card-header -->
-              <form role="form">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">آدرس ایمیل</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="ایمیل را وارد کنید">
-                  </div>
-                </div>
-              </form>
+              <div class="row d-flex flex-row justify-content-around m-5">
+                <button type="submit" id="username-edit-btn" class="btn btn-success p-3">تغییر نام کاربری</button>
+                <button type="submit" id="password-edit-btn" class="btn btn-success p-3">تغییر رمز عبور</button>
+              </div>
               <!-- /.card-body -->
             </div>
             <!-- /.Username / Password Change -->

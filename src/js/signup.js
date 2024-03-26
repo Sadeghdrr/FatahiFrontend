@@ -44,17 +44,13 @@ function addEventListeners() {
                 NotificationModal("success", "ثبت نام با موفقیت انجام شد", "نام کاربری و رمز عبور برای شما پیامک خواهد شد")
             })
             .catch((error) => {
-            try {
-                if (error.response.status == 400) {
+                if (error.response && error.response.status === 400) {
                     let errors = error.response.data;
                     let errors_fields = Object.keys(errors);
                     NotifErrors(errors, errors_fields);
                 } else {
-                    NotificationModal("error", "ثبت نام ناموفق", `status:${error.response.status}`)
+                    NotificationModal("error", "ثبت نام ناموفق", `status:${error.response ? error.response.status : 'unknown'}`);
                 }
-            } catch (error) {
-                NotificationModal("error", "ثبت نام ناموفق")
-            }
         })
     });
 
