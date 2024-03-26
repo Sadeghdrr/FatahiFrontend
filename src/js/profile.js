@@ -1,28 +1,33 @@
-import {axiosAgent, CreateNavSide} from "./utils.js";
+import {axiosAgent, CreateNavSide, NotificationModal} from "./utils.js";
 import $ from './jquery.module.js';
 import './axios.min.js';
 
-function generateFormFields(profileData) {
-    const cardBody = $('#profile-card-body');
-    cardBody.empty();
-
-    // Iterate over profile data fields
-    $.each(profileData, function(field, value) {
-        // Create form group div
-        const formGroup = $('<div class="form-group"></div>');
-
-        // Create label
-        const label = $(`<label for="${field}">${field}</label>`);
-
-        // Create input field
-        const input = $(`<input type="text" class="form-control" id="${field}" placeholder="${field} را وارد کنید" value="${value}">`);
-
-        // Append label and input field to form group
-        formGroup.append(label, input);
-
-        // Append form group to card body
-        cardBody.append(formGroup);
-    });
-}
-
 CreateNavSide('profile.html')
+
+axiosAgent.get('/profile/')
+    .then((response) => {
+        let profile = response.data
+        let insurance_details = profile.insurance_details
+        let access_level_data = profile.access_level_data
+        delete profile.insurance_details
+        delete profile.access_level_data
+        delete profile.id
+        delete profile.account_state
+
+        // Profile initiation
+        $.each(profile, function(field, value) {
+            $(`#${field}-input`).val(value)
+        })
+
+        // Access_level_data initiation
+        $("#access-level").text(access_level_data.access_level)
+        $("#branch").text(access_level_data.branch ? access_level_data.branch : "----")
+        $("#title").text(access_level_data.title ? access_level_data.title : "----")
+
+        // Insurance initiation
+
+    })
+    .catch((error) => {
+        console.error(error)
+        NotificationModal("error", "خطا در واکشی پروفایل", `status:${error.response.status}, message:${error.response.data.detail}`)
+    })

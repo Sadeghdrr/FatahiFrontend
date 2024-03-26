@@ -7,6 +7,23 @@ export const axiosAgent = axios.create({
     baseURL: SERVER_URL,
 });
 
+// Add a request interceptor
+axiosAgent.interceptors.request.use(
+    function(config) {
+        // Check if token exists in localStorage
+        const token = localStorage.getItem('token');
+        // If token exists, set authorization header
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    function(error) {
+        // Do something with request error
+        return Promise.reject(error);
+    }
+);
+
 export async function NotificationModal(icon, title, text) {
     await Swal.fire({
         icon: icon,
@@ -24,12 +41,10 @@ export function CheckHasAuthToken() {
 
             axiosAgent.post("/login/", data)
                 .then((response) => {
-                    axiosAgent.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;
                     resolve(true);
                 })
                 .catch((error) => {
                     localStorage.removeItem("token");
-                    axiosAgent.defaults.headers.common['Authorization'] = '';
                     resolve(false);
                 });
         } else {
@@ -49,7 +64,7 @@ export function GetCurrentUser() {
         });
 }
 
-export function getFieldNameInPersian(field_name) {
+function getFieldNameInPersian(field_name) {
     const fieldTranslations = {
         first_name: "نام",
         last_name: "نام خانوادگی",
@@ -68,7 +83,7 @@ export function getFieldNameInPersian(field_name) {
     return fieldTranslations[field_name] || field_name;
 }
 
-export function getErrorInPersian(error_describtion) {
+function getErrorInPersian(error_describtion) {
     const errorTranslations = {
         "This field is required.": "این فیلد الزامی است",
         "This field may not be blank.": "این فیلد الزامی است",
@@ -82,6 +97,14 @@ export function getErrorInPersian(error_describtion) {
     };
 
     return errorTranslations[error_describtion] || error_describtion;
+}
+
+export async function NotifErrors(errors, errors_fields) {
+    for (let i = 0; i < errors_fields.length; i++) {
+        for (let error_decribtion of errors[errors_fields[i]])
+            await NotificationModal("error", getFieldNameInPersian(errors_fields[i]),
+                getErrorInPersian(error_decribtion));
+    }
 }
 
 function CreateSideBar(user, page_link, sidebar, profile) {
@@ -148,7 +171,8 @@ function InitiateNavbar(navbar) {
                 }, 1000);
             }, (error) => {
                 console.error(error)
-                NotificationModal("error", "ورود ناموفق", error.response.status)
+                NotificationModal("error", "ورود ناموفق", `status:${error.response.status}, message:${error.response.data.detail}`)
+
             })
     })
 

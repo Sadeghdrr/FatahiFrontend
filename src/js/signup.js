@@ -1,21 +1,11 @@
 import {
     axiosAgent,
     CheckHasAuthToken,
-    getErrorInPersian,
-    getFieldNameInPersian,
-    NotificationModal,
-    SERVER_URL
+    NotifErrors,
+    NotificationModal
 } from "./utils.js";
 import $ from './jquery.module.js';
 import './axios.min.js';
-
-async function NotifErrors(errors, errors_fields) {
-    for (let i = 0; i < errors_fields.length; i++) {
-        for (let error_decribtion of errors[errors_fields[i]])
-            await NotificationModal("error", getFieldNameInPersian(errors_fields[i]),
-                getErrorInPersian(error_decribtion));
-    }
-}
 
 function addEventListeners() {
     let firstName = $("#first-name-input");
@@ -52,19 +42,20 @@ function addEventListeners() {
         axiosAgent.post("/signup/", data)
             .then((response) => {
                 NotificationModal("success", "ثبت نام با موفقیت انجام شد", "نام کاربری و رمز عبور برای شما پیامک خواهد شد")
-            }, (error) => {
-                try {
-                    if (error.response.status == 400) {
-                        let errors = error.response.data;
-                        let errors_fields = Object.keys(errors);
-                        NotifErrors(errors, errors_fields);
-                    } else {
-                        NotificationModal("error", "ثبت نام ناموفق", `status:${error.response.status}`)
-                    }
-                } catch (error) {
-                    NotificationModal("error", "ثبت نام ناموفق")
-                }
             })
+            .catch((error) => {
+            try {
+                if (error.response.status == 400) {
+                    let errors = error.response.data;
+                    let errors_fields = Object.keys(errors);
+                    NotifErrors(errors, errors_fields);
+                } else {
+                    NotificationModal("error", "ثبت نام ناموفق", `status:${error.response.status}`)
+                }
+            } catch (error) {
+                NotificationModal("error", "ثبت نام ناموفق")
+            }
+        })
     });
 
     let cornerButton = $("#corner-button");
