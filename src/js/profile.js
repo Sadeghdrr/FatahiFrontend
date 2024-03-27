@@ -204,7 +204,7 @@ function addEventListener() {
                 if (result.isConfirmed) {
                     axiosAgent.put("/profile/change_username/", {"new_username": result.value})
                         .then((response) => {
-                            NotificationModal("success", "ویرایش موفق", `نام کاربری با موفقیت به "${result.value}" تغییر یافت`)
+                            NotificationModal("success", "ویرایش موفق", `نام کاربری با موفقیت به "${response.data.username}" تغییر یافت`)
                         }).catch((error) => {
                             if (error.response && error.response.status === 400) {
                                 let errors = error.response.data;
